@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { calculateCart } from "../utils/calculateCart";
 
 const initialState = {
   products: [],
@@ -30,46 +31,12 @@ export const appSlice = createSlice({
       } else {
         state.cart.push({ ...product, quantity: 1 });
       }
-
-      state.cartCount = state.cart.reduce(
-        (total, item) => total + item.quantity,
-        0
-      );
-      state.cartItemsCount = state.cart.length;
-      state.totalPrice = state.cart.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
-      state.cartTotalAmount = state.cart.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
-      state.cartTotalSum = state.cart.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
+      calculateCart(state);
     },
 
     removeFromCart: (state, action) => {
       state.cart = state.cart.filter((item) => item.id !== action.payload);
-
-      state.cartCount = state.cart.reduce(
-        (total, item) => total + item.quantity,
-        0
-      );
-      state.cartItemsCount = state.cart.length;
-      state.totalPrice = state.cart.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
-      state.cartTotalAmount = state.cart.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
-      state.cartTotalSum = state.cart.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
+      calculateCart(state);
     },
 
     updateQuantity: (state, action) => {
@@ -79,24 +46,7 @@ export const appSlice = createSlice({
       if (item) {
         item.quantity = quantity;
       }
-
-      state.cartCount = state.cart.reduce(
-        (total, item) => total + item.quantity,
-        0
-      );
-      state.cartItemsCount = state.cart.length;
-      state.totalPrice = state.cart.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
-      state.cartTotalAmount = state.cart.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
-      state.cartTotalSum = state.cart.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
+      calculateCart(state);
     },
 
     setUser: (state, action) => {
